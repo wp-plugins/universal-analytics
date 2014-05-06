@@ -3,7 +3,7 @@
 Plugin Name: Universal Analytics
 Plugin URI: http://wordpress.org/extend/plugins/universal-analytics/
 Description: A simple method to add Google's Universal Analytics JavaScript tracking code to your WordPress website.
-Version: 1.0
+Version: 1.0.0
 Author: Matchbox Design Group
 Author URI: http://matchboxdesigngroup.com/
 */
