@@ -3,7 +3,7 @@
 Plugin Name: Universal Analytics
 Plugin URI: http://wordpress.org/extend/plugins/universal-analytics/
 Description: A simple method to add Google's Universal Analytics JavaScript tracking code to your WordPress website.
-Version: 1.0.0
+Version: 1.0.1
 Author: Matchbox Design Group
 Author URI: http://matchboxdesigngroup.com/
 */
@@ -23,7 +23,7 @@ function mdg_deactive_google_universal_analytics() {
   delete_option('in_footer');
   delete_option('plugin_switch');
   delete_option('track_links');
-  delete_option('enable_display'); 
+  delete_option('enable_display');
   delete_option('anonymize_ip');
   delete_option('tracking_off_for_this_role');
   delete_option('tracking_off_for_role');
@@ -37,7 +37,7 @@ function mdg_admin_menu_google_universal_analytics() {
 
 // Load the options page (the markup)
 function mdg_options_page_google_universal_analytics() {
-  include(WP_PLUGIN_DIR.'/wp-universal-analytics/options.php');  
+  include(WP_PLUGIN_DIR.'/universal-analytics/options.php');
 }
 
 // This contains the output of the tracking code
@@ -50,17 +50,17 @@ function mdg_google_universal_analytics_scripts($hook){
 
 		if($hook != $settings_page && $hook != $settings_page1)
 		return;
-		
+
 		// Register styles
-		wp_register_style( 'bootstrap-css', plugins_url( 'wp-universal-analytics/bootstrap/css/bootstrap.min.css' , dirname(__FILE__) ) );
-		wp_register_style( 'bootstrap-switch-css', plugins_url( 'wp-universal-analytics/bootstrap/css/bootstrap-switch.min.css' , dirname(__FILE__) ) );
-		wp_register_style( 'main-css', plugins_url( 'wp-universal-analytics/assets/gua-main.css' , dirname(__FILE__) ) );
+		wp_register_style( 'bootstrap-css', plugins_url( 'universal-analytics/bootstrap/css/bootstrap.min.css' , dirname(__FILE__) ) );
+		wp_register_style( 'bootstrap-switch-css', plugins_url( 'universal-analytics/bootstrap/css/bootstrap-switch.min.css' , dirname(__FILE__) ) );
+		wp_register_style( 'main-css', plugins_url( 'universal-analytics/assets/gua-main.css' , dirname(__FILE__) ) );
 
 		// Register scripts
 		wp_register_script( 'google-js', '//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js', array(), '', true );
-		wp_register_script( 'bootstrap-js', plugins_url( 'wp-universal-analytics/bootstrap/js/bootstrap.min.js' , dirname(__FILE__) ), array('google-js'), '', true );
-		wp_register_script( 'bootstrap-switch-js', plugins_url( 'wp-universal-analytics/bootstrap/js/bootstrap-switch.min.js' , dirname(__FILE__) ) , array('bootstrap-js'),'',true );
-		wp_register_script( 'main-js', plugins_url( 'wp-universal-analytics/assets/gua-main.js' , dirname(__FILE__) ) , array('google-js'),'',true );
+		wp_register_script( 'bootstrap-js', plugins_url( 'universal-analytics/bootstrap/js/bootstrap.min.js' , dirname(__FILE__) ), array('google-js'), '', true );
+		wp_register_script( 'bootstrap-switch-js', plugins_url( 'universal-analytics/bootstrap/js/bootstrap-switch.min.js' , dirname(__FILE__) ) , array('bootstrap-js'),'',true );
+		wp_register_script( 'main-js', plugins_url( 'universal-analytics/assets/gua-main.js' , dirname(__FILE__) ) , array('google-js'),'',true );
 
 		// Enqueue styles
 		wp_enqueue_style( 'bootstrap-css' );
@@ -77,7 +77,7 @@ function mdg_google_universal_analytics_scripts($hook){
 register_deactivation_hook(__FILE__, 'mdg_deactive_google_universal_analytics');
 
 if (is_admin()) {
-  add_action('admin_enqueue_scripts', 'mdg_google_universal_analytics_scripts');		
+  add_action('admin_enqueue_scripts', 'mdg_google_universal_analytics_scripts');
   add_action('admin_menu', 'mdg_admin_menu_google_universal_analytics');
 }
 
@@ -131,7 +131,7 @@ function mdg_save_google_universal_analytics_settings() {
 		$anonymize_ip = $_REQUEST['anonymize_ip'];
 		$tracking_off_for_this_role = $_REQUEST['tracking_off_for_this_role'];
 		$tracking_off_for_role = $_REQUEST['tracking_off_for_role'];
-		
+
 		update_option('web_property_id', $property_id);
   	update_option('in_footer', $in_footer);
  		update_option('plugin_switch', $plugin_switch);
