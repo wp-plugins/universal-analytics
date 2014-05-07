@@ -3,7 +3,7 @@
 Plugin Name: Universal Analytics
 Plugin URI: http://wordpress.org/extend/plugins/universal-analytics/
 Description: A simple method to add Google's Universal Analytics JavaScript tracking code to your WordPress website.
-Version: 1.0.1
+Version: 1.2.0
 Author: Matchbox Design Group
 Author URI: http://matchboxdesigngroup.com/
 */
@@ -147,4 +147,25 @@ function mdg_save_google_universal_analytics_settings() {
 }
 
 add_action( 'wp_ajax_mdg_save_google_universal_analytics_settings', 'mdg_save_google_universal_analytics_settings' );
+
+
+// Alerts
+// Display an error message when Universal Analytics hasn't been setup.
+function mdg_google_universal_analytics_check() {
+	$plugin_switch 	= get_option('plugin_switch')=='off';
+	$property_id 		= get_option('web_property_id');
+	
+		if (!$property_id){
+			echo "<div id='message' class='error'>";
+			echo "<p><strong>" . __( "Almost there: Now you need add your Tracking ID to Universal Analytics.", 'mdg-universal-analytics' ) . "</strong> " . sprintf( __( "Go to your %sGoogle Analytics Settings%s and add your information.", 'mdg-universal-analytics' ), "<a href='" . admin_url( 'options-general.php?page=mdg_google_universal_analytics' ) . "'>", "</a>" ) . "</p></div>";
+		}elseif ($plugin_switch) {
+			echo "<div id='message' class='error'>";
+			echo "<p><strong>" . __( "Whoa there partner: Universal Analytics is turned off.", 'mdg-universal-analytics' ) . "</strong> " . sprintf( __( "This means you aren't tracking your site.  Go to your %sGoogle Analytics Settings%s and change the Status to ON", 'mdg-universal-analytics' ), "<a href='" . admin_url( 'options-general.php?page=mdg_google_universal_analytics' ) . "'>", "</a>" ) . "</p></div>";
+		}
+}
+
+function mdg_google_universal_analytics_admin_check() {
+		mdg_google_universal_analytics_check();	
+}
+add_action( 'admin_head', 'mdg_google_universal_analytics_admin_check' );
 ?>
